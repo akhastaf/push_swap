@@ -6,17 +6,13 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/21 16:59:48 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/04/22 17:48:19 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/04/23 12:35:58 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/checker.h"
 
-void    ft_puterror(void)
-{
-    ft_putendl_fd("Error", 2);
-    exit(1);
-}
+
 int     is_dup(int ac, char **av)
 {
     int i;
@@ -24,17 +20,17 @@ int     is_dup(int ac, char **av)
     
     t = ft_atoi(av[ac]);
     if (t < MIN_INT || t > MAX_INT)
-        return 1;
+        return (1);
     if (!av[ac + 1])
-        return 0;
+        return (0);
     i = ac + 1;
     while (av[i])
     {
         if (t == ft_atoi(av[i]))
-            return 1;
+            return (1);
         i++;
     }
-    return 0;
+    return (0);
 }
 
 int    check_error(int ac, char **av)
@@ -45,12 +41,12 @@ int    check_error(int ac, char **av)
     while (av[ac][i])
     {
         if (!ft_isdigit(av[ac][i]))
-            return 1;
+            return (1);
         i++;
     }
     if (is_dup(ac, av))
-        return 1;
-    return 0;
+        return (1);
+    return (0);
     
 }
 
@@ -78,7 +74,6 @@ void    check_opr(t_checker *c, char *opr)
         clear_stack(&(c->a), free);
         clear_stack((&c->b), free);
         ft_lstclear(&(c->op), free);
-        ft_putendl_fd("hi", 2);
         ft_puterror();
     }
 }
@@ -130,10 +125,22 @@ void    excute_operations(t_checker *c)
     }
 }
 
-// void    check_sort(t_checker *c)
-// {
+int    check_sort(t_checker *c)
+{
+    t_stack *tmp;
+
+    if (c->b)
+        return (0);
+    tmp = c->a;
+    while (tmp)
+    {
+        if (tmp->next && tmp->data > tmp->next->data)
+            return (0);
+        tmp = tmp->next;
+    }
+    return (1);
     
-// }
+}
 
 int     main(int ac, char **av)
 {
@@ -147,9 +154,15 @@ int     main(int ac, char **av)
         get_numbers(&(c->a), ac - 1, av);
         get_operations(c);
         excute_operations(c);
-        // check_sort(c);
+        if (check_sort(c))
+            ft_putendl_fd("OK", 1);
+        else
+            ft_putendl_fd("KO", 1);
         print_stack(c->a);
-        
+        clear_stack(&(c->a), free);
+        clear_stack(&(c->b), free);
+        ft_lstclear(&(c->op), free);
     }
+    return (0);
     
 }

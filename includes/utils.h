@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/21 13:40:19 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/04/22 17:22:33 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/04/23 12:32:53 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ char		*ft_strjoin(char  *s1, char  *s2);
 size_t		ft_strlen(const char *s);
 char		*ft_strndup(const char *s1, size_t n);
 int		ft_strcmp(const char *s1, const char *s2);
+void    ft_puterror(void);
 
 
 #endif
