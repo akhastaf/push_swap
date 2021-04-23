@@ -1,36 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   structs.h                                          :+:      :+:    :+:   */
+/*   check_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/21 13:35:04 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/04/23 15:00:54 by akhastaf         ###   ########.fr       */
+/*   Created: 2021/04/23 14:53:43 by akhastaf          #+#    #+#             */
+/*   Updated: 2021/04/23 14:53:58 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCTS_H
-# define STRUCTS_H
+#include "../includes/utils.h"
 
-typedef struct s_stack
+int    check_error(int ac, char **av)
 {
-    int data;
-    struct s_stack  *next;
-} t_stack;
+    int i;
 
-typedef struct		s_list
-{
-	void			*data;
-	struct s_list	*next;
-}					t_list;
-
-typedef struct s_checker
-{
-    t_stack *a;
-    t_stack *b;
-    t_list  *op;
-}       t_checker;
-
-
-#endif
+    i = 0;
+    while (av[ac][i])
+    {
+        if (!ft_isdigit(av[ac][i]))
+            return (1);
+        i++;
+    }
+    if (is_dup(ac, av))
+        return (1);
+    return (0); 
+}

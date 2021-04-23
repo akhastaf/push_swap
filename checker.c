@@ -6,63 +6,12 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/21 16:59:48 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/04/23 12:35:58 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/04/23 15:53:15 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/checker.h"
 
-
-int     is_dup(int ac, char **av)
-{
-    int i;
-    long t;
-    
-    t = ft_atoi(av[ac]);
-    if (t < MIN_INT || t > MAX_INT)
-        return (1);
-    if (!av[ac + 1])
-        return (0);
-    i = ac + 1;
-    while (av[i])
-    {
-        if (t == ft_atoi(av[i]))
-            return (1);
-        i++;
-    }
-    return (0);
-}
-
-int    check_error(int ac, char **av)
-{
-    int i;
-
-    i = 0;
-    while (av[ac][i])
-    {
-        if (!ft_isdigit(av[ac][i]))
-            return (1);
-        i++;
-    }
-    if (is_dup(ac, av))
-        return (1);
-    return (0);
-    
-}
-
-void     get_numbers(t_stack **a, int ac, char **av)
-{
-    while (ac > 0)
-    {
-        if (check_error(ac, av))
-        {
-            clear_stack(a, free);
-            ft_puterror();
-        }
-        push(a, ft_atoi(av[ac]));
-        ac--;
-    }
-}
 
 void    check_opr(t_checker *c, char *opr)
 {
@@ -89,29 +38,7 @@ void    get_operations(t_checker *c)
     }
 }
 
-void    do_opr(t_checker *c, char *opr)
-{
-    if (!ft_strcmp(opr, "sa"))
-        swap(&(c->a));
-    if (!ft_strcmp(opr, "sb"))
-        swap(&(c->b));
-    if (!ft_strcmp(opr, "pa"))
-        push_a(&(c->a), &(c->b));
-    if (!ft_strcmp(opr, "pb"))
-        push_b(&(c->a), &(c->b));
-    if (!ft_strcmp(opr, "ra"))
-        rotate(&(c->a));
-    if (!ft_strcmp(opr, "rb"))
-        rotate(&(c->b));
-    if (!ft_strcmp(opr, "rr"))
-        rotate_r(&(c->a), &(c->b));
-    if (!ft_strcmp(opr, "rra"))
-        reverse_rotate(&(c->a));
-    if (!ft_strcmp(opr, "rrb"))
-        reverse_rotate(&(c->b));
-    if (!ft_strcmp(opr, "rrr"))
-        reverse_rotate_r(&(c->a), &(c->b));
-}
+
 
 void    excute_operations(t_checker *c)
 {
@@ -120,26 +47,9 @@ void    excute_operations(t_checker *c)
     tmp = c->op;
     while (tmp)
     {
-        do_opr(c, tmp->data);
+        do_opr(&(c->a), &(c->b), tmp->data);
         tmp = tmp->next;
     }
-}
-
-int    check_sort(t_checker *c)
-{
-    t_stack *tmp;
-
-    if (c->b)
-        return (0);
-    tmp = c->a;
-    while (tmp)
-    {
-        if (tmp->next && tmp->data > tmp->next->data)
-            return (0);
-        tmp = tmp->next;
-    }
-    return (1);
-    
 }
 
 int     main(int ac, char **av)
@@ -154,7 +64,7 @@ int     main(int ac, char **av)
         get_numbers(&(c->a), ac - 1, av);
         get_operations(c);
         excute_operations(c);
-        if (check_sort(c))
+        if (check_sort(c->a, c->b))
             ft_putendl_fd("OK", 1);
         else
             ft_putendl_fd("KO", 1);

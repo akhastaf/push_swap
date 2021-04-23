@@ -1,36 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   structs.h                                          :+:      :+:    :+:   */
+/*   get_numbers.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/21 13:35:04 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/04/23 15:00:54 by akhastaf         ###   ########.fr       */
+/*   Created: 2021/04/23 14:51:27 by akhastaf          #+#    #+#             */
+/*   Updated: 2021/04/23 14:53:03 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCTS_H
-# define STRUCTS_H
+#include "../includes/utils.h"
 
-typedef struct s_stack
+void     get_numbers(t_stack **a, int ac, char **av)
 {
-    int data;
-    struct s_stack  *next;
-} t_stack;
-
-typedef struct		s_list
-{
-	void			*data;
-	struct s_list	*next;
-}					t_list;
-
-typedef struct s_checker
-{
-    t_stack *a;
-    t_stack *b;
-    t_list  *op;
-}       t_checker;
-
-
-#endif
+    while (ac > 0)
+    {
+        if (check_error(ac, av))
+        {
+            clear_stack(a, free);
+            ft_puterror();
+        }
+        push(a, ft_atoi(av[ac]));
+        ac--;
+    }
+}

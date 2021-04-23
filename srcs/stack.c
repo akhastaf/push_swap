@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/21 13:47:51 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/04/21 14:31:36 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/04/23 15:05:12 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,21 @@ void    clear_stack(t_stack **stack, void (*f)(void *))
             f(tmp);
         }
     }
+}
+
+int     count_stack(t_stack *s)
+{
+    t_stack *tmp;
+    int     i;
+    
+    tmp = s;
+    i = 0;
+    while (tmp)
+    {
+        i++;
+        tmp = tmp->next;
+    }
+    return (i);
 }
 
 void    print_stack(t_stack *s)

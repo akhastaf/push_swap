@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/21 13:40:19 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/04/23 12:32:53 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/04/23 15:53:47 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int     peek_s(const t_stack *stack);
 int     stack_count(t_stack *s);
 void    clear_stack(t_stack **stack, void (*f)(void *));
 void    print_stack(t_stack *s);
+int     count_stack(t_stack *s);
 
 // LIST
 t_list	*ft_lstnew(void *data);
@@ -55,7 +56,6 @@ void    reverse_rotate_r(t_stack **s1, t_stack **s2);
 
 // UTILS
 void	ft_putendl_fd(char *s, int fd);
-// long long	ft_atoi(const char *str);
 long		ft_atoi(const char *str);
 int		ft_isdigit(int c);
 char		*ft_strchr(const char *s, int c);
@@ -65,6 +65,10 @@ size_t		ft_strlen(const char *s);
 char		*ft_strndup(const char *s1, size_t n);
 int		ft_strcmp(const char *s1, const char *s2);
 void    ft_puterror(void);
-
+int     is_dup(int ac, char **av);
+void    get_numbers(t_stack **a, int ac, char **av);
+int    check_error(int ac, char **av);
+int     check_sort(t_stack *a, t_stack *b);
+void    do_opr(t_stack **a, t_stack **b, char *opr);
 
 #endif

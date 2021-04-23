@@ -1,36 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   structs.h                                          :+:      :+:    :+:   */
+/*   check_sort.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/21 13:35:04 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/04/23 15:00:54 by akhastaf         ###   ########.fr       */
+/*   Created: 2021/04/23 15:41:05 by akhastaf          #+#    #+#             */
+/*   Updated: 2021/04/23 15:44:07 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCTS_H
-# define STRUCTS_H
+#include "../includes/utils.h"
 
-typedef struct s_stack
+int     check_sort(t_stack *a, t_stack *b)
 {
-    int data;
-    struct s_stack  *next;
-} t_stack;
+    t_stack *tmp;
 
-typedef struct		s_list
-{
-	void			*data;
-	struct s_list	*next;
-}					t_list;
-
-typedef struct s_checker
-{
-    t_stack *a;
-    t_stack *b;
-    t_list  *op;
-}       t_checker;
-
-
-#endif
+    if (b)
+        return (0);
+    tmp = a;
+    while (tmp)
+    {
+        if (tmp->next && tmp->data > tmp->next->data)
+            return (0);
+        tmp = tmp->next;
+    }
+    
+    return 1;
+}
