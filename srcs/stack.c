@@ -6,13 +6,13 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/21 13:47:51 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/04/23 15:05:12 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/05/01 16:50:48 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/utils.h"
 
-int     push(t_stack **stack, int data)
+int     push(t_stack **stack, int data, int chunk)
 {
     t_stack *new;
 
@@ -20,6 +20,7 @@ int     push(t_stack **stack, int data)
     if (!new)
         return -1;
     new->data = data;
+    new->chunk = chunk;
     new->next = *stack;
     *stack = new;
     return (1);
@@ -98,7 +99,7 @@ void    print_stack(t_stack *s)
     printf("=========================\n");
     while (tmp)
     {
-        printf("%d\n", tmp->data);
+        printf("%d\t\t\t%d\n",tmp->chunk, tmp->data);
         tmp = tmp->next; 
     }
     printf("=========================\n");

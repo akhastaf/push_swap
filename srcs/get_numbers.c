@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 14:51:27 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/04/23 14:53:03 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/05/02 14:37:23 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void     get_numbers(t_stack **a, int ac, char **av)
             clear_stack(a, free);
             ft_puterror();
         }
-        push(a, ft_atoi(av[ac]));
+        push(a, ft_atoi(av[ac]), 0);
         ac--;
     }
 }

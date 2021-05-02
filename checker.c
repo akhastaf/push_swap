@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/21 16:59:48 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/04/23 15:53:15 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/05/02 14:44:48 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void    excute_operations(t_checker *c)
     tmp = c->op;
     while (tmp)
     {
-        do_opr(&(c->a), &(c->b), tmp->data);
+        do_opr(&(c->a), &(c->b), 0, tmp->data);
         tmp = tmp->next;
     }
 }
