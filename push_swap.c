@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/21 13:33:43 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/02 14:44:10 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/05/08 13:10:48 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ t_stack *copy(t_stack *a)
 }
 
 
-int     is_valid(t_stack *s, int pivot)
+int     is_less(t_stack *s, int pivot)
 {
     while (s)
     {
@@ -102,27 +102,116 @@ int     is_valid(t_stack *s, int pivot)
     return (0);
 }
 
+int     is_greater(t_stack *s, int pivot)
+{
+    while(s)
+    {
+        if (s->data > pivot)
+            return (1);
+        s = s->next;
+    }
+    return (0);
+}
 
-void    half(t_stack **a, t_stack **b, int p)
+
+void    from_a_to_b(t_stack **a, t_stack **b, int p)
 {
     t_stack *tmp;
     int last;
 
     tmp = *a;
-    while (is_valid(*a, p))
+    while (is_less(*a, p))
     {
         last = get_last(*a);
         if ((*a)->data < p)
             exec_opr(a, b, g_chunk, "pb");
         else if (last < p)
         {
-            exec_opr(a, b, g_chunk, "ra");
+            exec_opr(a, b, 0, "ra");
             exec_opr(a, b, g_chunk, "pb");
         }
         else
-            exec_opr(a, b, g_chunk, "rra");
+            exec_opr(a, b, 0, "rra");
+        // printf("******************************* pivot : %d\n", p);
+        // printf("********************** this stack A");
+        // print_stack(*a);
+        // printf("********************** this stack B");
+        // print_stack(*b);
     }
 }
+
+t_stack     *get_chunk(t_stack *a, int chunk)
+{
+    t_stack *tmp;
+    t_stack *new;
+
+    new = NULL;
+    tmp = a;
+    while (tmp)
+    {
+        if (tmp->chunk == chunk)
+            push(&new, tmp->data, chunk);
+        tmp = tmp->next;
+    }
+    return new;
+}
+
+int    get_higher(t_stack *a, int p)
+{
+    t_stack *t;
+    int i;
+
+    t = a;
+    i = 0;
+    while (t)
+    {
+        printf("higher : %d\n", t->data);
+        if (t->data < p)
+            i++;
+        t = t->next;
+    }
+    return i;
+}
+
+void    from_b_to_a(t_stack **a, t_stack **b, int p)
+{
+    t_stack *tmp;
+    int i;
+    int l;
+
+    tmp = *b;
+    while (is_greater(*b, p))
+    {   
+        printf("******************************* pivot : %d\n", p);
+        printf("********************** this stack A");
+        print_stack(*a);
+        printf("********************** this stack B");
+        print_stack(*b);
+        if ((*b)->data == p)
+            exec_opr(a, b, 0, "sb");
+        if ((*b)->data > p)
+            exec_opr(a, b, g_chunk, "pa");
+        else if ((*b)->data < p)
+        {
+            i = get_higher(*b, p);
+            printf("position %d\n", i);
+            l = count_stack(*b);
+            if (i >= l / 2)
+                exec_loop(a, b, 0, "rrb", l - i);
+            else
+                exec_loop(a, b, 0, "rb", i);
+            // if (i == 1)
+            //     i++;
+            // exec_loop(a, b, 0, "rrb", i - 1);
+            exec_opr(a, b, g_chunk, "pa");
+            // if ((*b)->data > p)
+            //     exec_opr(a, b, g_chunk, "pa");
+            // exec_loop(a, b, 0, "rb", i - 1);
+        }
+    }
+}
+
+
 int pivot(t_stack *a)
 {
     t_stack *tmp;
@@ -158,16 +247,71 @@ int pivot(t_stack *a)
     return (tmp->data);
 }
 
-void sort(t_stack **a, t_stack **b)
+void    first(t_stack **a, t_stack **b)
 {
     int p;
-
-    if (!(*a) || count_stack(*a) <= 2)
+    
+    if (check_sort(*a, NULL))
         return ;
+    if (!(*a) || count_stack(*a) <= 2)
+    {
+        if (count_stack(*a) == 2 && (*a)->data > (*a)->next->data)
+            exec_opr(a, NULL, 0, "sa");  
+        return ;
+    }
     p = pivot(*a);
     g_chunk++;
-    half(a, b, p);
-    sort(a, b);
+    from_a_to_b(a, b, p);
+    first(a, b);
+}
+
+void    second(t_stack **a, t_stack **b)
+{
+    t_stack *tmp;
+    int p;
+    
+    p = 0;
+    if (!(*b))
+        return ;
+    tmp = get_chunk(*b, (*b)->chunk);
+    if (count_stack(*b) <= 2)
+    {
+        if (count_stack(*b) == 2 && (*b)->data < (*b)->next->data)
+            exec_opr(NULL, b, 0, "sb");
+        if (*b)
+            exec_opr(a, b, (*b)->chunk, "pa");
+        if (*b)
+         exec_opr(a, b, (*b)->chunk, "pa");
+        return ;
+    }
+    if (count_stack(tmp) == 2)
+    {
+        if ((*b)->data < (*b)->next->data)
+            exec_opr(NULL, b, 0, "sb");
+        exec_opr(a, b, (*b)->chunk, "pa");
+        exec_opr(a, b, (*b)->chunk, "pa");
+    }
+    else if (count_stack(tmp) == 1)
+        exec_opr(a, b, (*b)->chunk, "pa");
+    else
+    {
+        p = pivot(tmp);
+        g_chunk++;
+        from_b_to_a(a, b, p);
+    }
+    // if (!check_sort(*a, NULL))
+    //     first(a,b);
+    second(a, b);
+}
+
+void sort(t_stack **a, t_stack **b)
+{
+    g_chunk = 0;
+    // while (!check_sort(*a, *b))
+    // {
+        first(a, b);
+        second(a, b);
+    //}
 }
 
 int     main(int ac, char **av)
@@ -178,11 +322,9 @@ int     main(int ac, char **av)
 
     a = NULL;
     b = NULL;
-    g_chunk = 0;
     if (ac > 1)
     {
-         get_numbers(&a, ac - 1, av);
-         
+        get_numbers(&a, ac - 1, av);
         c = count_stack(a);
         if (c == 3)
             sort_three(&a);
@@ -190,7 +332,7 @@ int     main(int ac, char **av)
         //     sort_five(&a, &b);
         else
             sort(&a, &b);
-         print_stack(a);
-         print_stack(b);
+        print_stack(a);
+        print_stack(b);
     }
 }

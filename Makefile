@@ -6,7 +6,7 @@
 #    By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/21 13:33:21 by akhastaf          #+#    #+#              #
-#    Updated: 2021/04/23 15:57:25 by akhastaf         ###   ########.fr        #
+#    Updated: 2021/05/02 15:28:40 by akhastaf         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,10 @@ all : $(NAME)
 $(NAME):
 		@$(C) $(CFLAG) $(SRC_P) -o $(NAME)
 		@$(C) $(CFLAG) $(SRC_C) -o checker
+
+debug :
+		@$(C) $(CFLAG) $(SRC_P) -o $(NAME) -g -fsanitize=address
+		@$(C) $(CFLAG) $(SRC_C) -o checker -g -fsanitize=address
 
 clean : 
 		@rm -rf $(NAME) checker

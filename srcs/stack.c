@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/21 13:47:51 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/01 16:50:48 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/05/02 14:47:25 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void    print_stack(t_stack *s)
     printf("=========================\n");
     while (tmp)
     {
-        printf("%d\t\t\t%d\n",tmp->chunk, tmp->data);
+        printf("chunk : %d\t\t\tnumber : %d\n",tmp->chunk, tmp->data);
         tmp = tmp->next; 
     }
     printf("=========================\n");
