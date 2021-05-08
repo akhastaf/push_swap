@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/21 13:54:35 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/02 14:36:59 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/05/08 13:38:11 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,34 @@ void    push_b(t_stack **a, t_stack **b, int chunk)
 void    rotate(t_stack **s)
 {
     t_stack *tmp;
+    t_stack *new;
+
+    new = malloc(sizeof(t_stack*));
+    new->data = (*s)->data;
+    new->chunk = (*s)->chunk;
+    new->next = NULL;
+    tmp = (*s);
+    *s = (*s)->next;
+    free(tmp);
+    tmp = (*s);
+    while (tmp)
+    {
+        if (!tmp->next)
+            break;
+        tmp = tmp->next;
+    }
+    tmp->next = new;
+}
+
+void    rotate_r(t_stack **s1, t_stack **s2)
+{
+    rotate(s1);
+    rotate(s2);
+}
+
+void    reverse_rotate(t_stack **s)
+ {
+    t_stack *tmp;
     t_stack *p;
     
     if (stack_count(*s) > 1)
@@ -74,35 +102,7 @@ void    rotate(t_stack **s)
         p->next = NULL;
         push(s, tmp->data, tmp->chunk);
         free(tmp);
-    }   
-}
-
-void    rotate_r(t_stack **s1, t_stack **s2)
-{
-    rotate(s1);
-    rotate(s2);
-}
-
-void    reverse_rotate(t_stack **s)
- {
-     t_stack *tmp1;
-     t_stack *tmp2;
-
-     tmp1 = malloc(sizeof(t_stack));
-     tmp1->chunk = (*s)->chunk;
-     tmp1->data = pop(s);
-     tmp1->next = NULL;
-
-    tmp2 = *s;
-     while (tmp2)
-     {
-         if (!tmp2->next)
-         {
-            tmp2->next = tmp1;
-             break ;
-         }
-         tmp2 = tmp2->next;
-     }
+    }
  }
 
 void    reverse_rotate_r(t_stack **s1, t_stack **s2)

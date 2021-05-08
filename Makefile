@@ -6,7 +6,7 @@
 #    By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/21 13:33:21 by akhastaf          #+#    #+#              #
-#    Updated: 2021/05/02 15:28:40 by akhastaf         ###   ########.fr        #
+#    Updated: 2021/05/08 16:36:54 by akhastaf         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,8 +30,8 @@ NAME = push_swap
 all : $(NAME)
 
 $(NAME):
-		@$(C) $(CFLAG) $(SRC_P) -o $(NAME)
-		@$(C) $(CFLAG) $(SRC_C) -o checker
+		@$(C) $(CFLAG) -g $(SRC_P) -o $(NAME)
+		@$(C) $(CFLAG) -g $(SRC_C) -o checker
 
 debug :
 		@$(C) $(CFLAG) $(SRC_P) -o $(NAME) -g -fsanitize=address

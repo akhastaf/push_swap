@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/21 16:59:48 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/02 14:44:48 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/05/08 14:19:56 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int     main(int ac, char **av)
             ft_putendl_fd("OK", 1);
         else
             ft_putendl_fd("KO", 1);
-        print_stack(c->a);
+        // print_stack(c->a);
         clear_stack(&(c->a), free);
         clear_stack(&(c->b), free);
         ft_lstclear(&(c->op), free);
