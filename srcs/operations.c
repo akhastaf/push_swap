@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/21 13:54:35 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/08 13:38:11 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/04 17:57:38 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void    swap(t_stack **s)
     int tmp2;
     int chunk2;
     
+    if (!s)
+        return ;
     if (stack_count(*s) > 1)
     {
         chunk1 = (*s)->chunk;
@@ -63,7 +65,7 @@ void    rotate(t_stack **s)
     t_stack *tmp;
     t_stack *new;
 
-    new = malloc(sizeof(t_stack*));
+    new = malloc(sizeof(t_stack));
     new->data = (*s)->data;
     new->chunk = (*s)->chunk;
     new->next = NULL;

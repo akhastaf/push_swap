@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/21 13:33:43 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/05/08 16:45:18 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/04 19:02:20 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,11 +122,11 @@ void    from_a_to_b(t_stack **a, t_stack **b, int p)
     tmp = *a;
     while (is_less(*a, p))
     {
-        printf("******************************* first pivot : %d\n", p);
-        printf("********************** this stack A\n");
-        print_stack(*a);
-        printf("********************** this stack B\n");
-        print_stack(*b);
+        // printf("******************************* first pivot : %d\n", p);
+        // printf("********************** this stack A\n");
+        // print_stack(*a);
+        // printf("********************** this stack B\n");
+        // print_stack(*b);
         last = get_last(*a);
         if ((*a)->data < p)
             exec_opr(a, b, g_chunk, "pb");
@@ -170,7 +170,6 @@ int    get_higher(t_stack *a, int p)
     i = 1;
     while (t)
     {
-        // printf("higher : %d\n", t->data);
         if (t->data <= p)
             i++;
         else if (t->data > p)
@@ -180,6 +179,29 @@ int    get_higher(t_stack *a, int p)
     return i;
 }
 
+int     get_pofhigher(t_stack *a, int chunk)
+{
+    t_stack *tmp;
+    int     max;
+    int     i;
+    int     p;
+
+    tmp = a;
+    max = tmp->data;
+    p = 0;
+    i = 0;
+    while (tmp)
+    {
+        if (tmp->data > max && tmp->chunk == chunk)
+        {
+            max = tmp->data;
+            p = i;
+        }
+        tmp = tmp->next;
+        i++;
+    }
+    return (p);
+}
 void    from_b_to_a(t_stack **a, t_stack **b, int p)
 {
     t_stack *tmp;
@@ -189,11 +211,11 @@ void    from_b_to_a(t_stack **a, t_stack **b, int p)
     tmp = *b;
     while (is_greater(*b, p))
     {   
-        printf("******************************* second pivot : %d\n", p);
-        printf("********************** this stack A\n");
-        print_stack(*a);
-        printf("********************** this stack B\n");
-        print_stack(*b);
+        // printf("******************************* second pivot : %d\n", p);
+        // printf("********************** this stack A\n");
+        // print_stack(*a);
+        // printf("********************** this stack B\n");
+        // print_stack(*b);
         if ((*b)->data == p)
             exec_opr(a, b, 0, "sb");
         if ((*b)->data > p)
@@ -294,8 +316,6 @@ void    first(t_stack **a, t_stack **b)
         g_chunk++;
         from_a_to_b(a, b, p);
     }
-    // if (g_chunk >= 7)
-    //     return ;
     first(a, b);
 }
 
@@ -314,56 +334,111 @@ int     get_bigger_chunk(t_stack *s)
     }
     return max;
 }
+
+int get_max(t_stack *a)
+{
+    t_stack *tmp;
+    int     max;
+
+    max = 0;
+    tmp = a;
+    while (tmp)
+    {
+        if (tmp->data > max)
+            max = tmp->data;
+        tmp = tmp->next;
+    }
+    return (max);
+}
+
+int is_chunkempty(t_stack *a, int chunk)
+{
+    t_stack *tmp;
+    
+    tmp = a;
+    while (tmp)
+    {
+        if (tmp->chunk == chunk)
+            return 0;
+        tmp = tmp->next;
+    }
+    return 1;
+}
+
 void    second(t_stack **a, t_stack **b)
 {
     t_stack *tmp;
-    int p;
     
-    p = 0;
-    if (!(*b))
-        return ;
-    tmp = get_chunk(*b, (*b)->chunk);
-    if (count_stack(*b) <= 2)
+    int p;
+    int n;
+    int l;
+
+    p = g_chunk;
+    // printf("first chunk %d\n", p);
+    while (*b && p > 0)
     {
-        if (count_stack(*b) == 2 && (*b)->data < (*b)->next->data)
-            exec_opr(NULL, b, 0, "sb");
-        if (*b)
+        while (!is_chunkempty(*b, g_chunk))
         {
-            g_chunk++;
+            // printf("chunk %d\n", tmp->chunk);
+            tmp = get_chunk((*b), g_chunk);
+            n = get_pofhigher(*b, g_chunk);
+            l = count_stack(*b);
+            // printf("count of b : %d\n", l);
+            if (n == 1)
+                exec_opr(a, b, 0, "sb");
+            else if (n >= (l / 2))
+                exec_loop(a, b, 0, "rrb", l - n);
+            else
+                exec_loop(a, b, 0, "rb", n);
             exec_opr(a, b, g_chunk, "pa");
         }
-        if (*b)
-        {
-            g_chunk++;
-            exec_opr(a, b, g_chunk, "pa");
-        }
-        return ;
+        g_chunk--;
     }
-    if (count_stack(tmp) == 2)
-    {
-        if ((*b)->data < (*b)->next->data)
-            exec_opr(NULL, b, 0, "sb");
-        g_chunk++;
-        exec_opr(a, b, g_chunk, "pa");
-        exec_opr(a, b, g_chunk, "pa");
-    }
-    else if (count_stack(tmp) == 1)
-    {
-        g_chunk++;
-        exec_opr(a, b, g_chunk, "pa");
-    }
-    else
-    {
-        p = pivot(tmp);
-        g_chunk++;
-        //print_stack(tmp);
-        from_b_to_a(a, b, p);
-    }
-    if (!check_sort(*a, NULL))
-        first(a,b);
-        // return ;
-    second(a, b);
+    // p = 0;
+    // if (!(*b))
+    //     return ;
+    // tmp = get_chunk(*b, (*b)->chunk);
+    // if (count_stack(*b) <= 2)
+    // {
+    //     if (count_stack(*b) == 2 && (*b)->data < (*b)->next->data)
+    //         exec_opr(NULL, b, 0, "sb");
+    //     if (*b)
+    //     {
+    //         g_chunk++;
+    //         exec_opr(a, b, g_chunk, "pa");
+    //     }
+    //     if (*b)
+    //     {
+    //         g_chunk++;
+    //         exec_opr(a, b, g_chunk, "pa");
+    //     }
+    //     return ;
+    // }
+    // if (count_stack(tmp) == 2)
+    // {
+    //     if ((*b)->data < (*b)->next->data)
+    //         exec_opr(NULL, b, 0, "sb");
+    //     g_chunk++;
+    //     exec_opr(a, b, g_chunk, "pa");
+    //     exec_opr(a, b, g_chunk, "pa");
+    // }
+    // else if (count_stack(tmp) == 1)
+    // {
+    //     g_chunk++;
+    //     exec_opr(a, b, g_chunk, "pa");
+    // }
+    // else
+    // {
+    //     p = pivot(tmp);
+    //     g_chunk++;
+    //     from_b_to_a(a, b, p);
+    // }
+    // if (!check_sort(*a, NULL))
+    //     first(a,b);
+    // second(a, b);
 }
+
+
 
 void sort(t_stack **a, t_stack **b)
 {
@@ -371,8 +446,12 @@ void sort(t_stack **a, t_stack **b)
     // while (!check_sort(*a, *b))
     // {
         first(a, b);
-        //printf("max chunk in A %d\n", g_chunk);
+        // print_stack(*a);
+        // print_stack(*b);
+        printf("max chunk in A %d\n", g_chunk);
         second(a, b);
+        // print_stack(*a);
+        // print_stack(*b);
     // }
 }
 
