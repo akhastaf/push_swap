@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_numbers.c                                      :+:      :+:    :+:   */
+/*   is_chunkempty.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/23 14:51:27 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/06/14 16:58:34 by akhastaf         ###   ########.fr       */
+/*   Created: 2021/06/14 16:01:49 by akhastaf          #+#    #+#             */
+/*   Updated: 2021/06/14 16:54:52 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/utils.h"
+#include "../includes/push_swap.h"
 
-void	get_numbers(t_stack **a, int ac, char **av)
+int	is_chunkempty(t_stack *a, int chunk)
 {
-	while (ac > 0)
+	t_stack	*tmp;
+
+	tmp = a;
+	while (tmp)
 	{
-		if (check_error(ac, av))
-		{
-			clear_stack(a, free);
-			ft_puterror();
-		}
-		push(a, ft_atoi(av[ac]), 0);
-		ac--;
+		if (tmp->chunk == chunk)
+			return (0);
+		tmp = tmp->next;
 	}
+	return (1);
 }

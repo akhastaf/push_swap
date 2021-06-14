@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_numbers.c                                      :+:      :+:    :+:   */
+/*   get_last.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/23 14:51:27 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/06/14 16:58:34 by akhastaf         ###   ########.fr       */
+/*   Created: 2021/06/14 15:57:54 by akhastaf          #+#    #+#             */
+/*   Updated: 2021/06/14 16:59:15 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/utils.h"
 
-void	get_numbers(t_stack **a, int ac, char **av)
+int	get_last(t_stack *a)
 {
-	while (ac > 0)
-	{
-		if (check_error(ac, av))
-		{
-			clear_stack(a, free);
-			ft_puterror();
-		}
-		push(a, ft_atoi(av[ac]), 0);
-		ac--;
-	}
+	while (a->next)
+		a = a->next;
+	return (a->data);
 }

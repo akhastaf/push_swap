@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/22 16:32:27 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/04/22 17:35:09 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/14 17:21:46 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ t_list	*ft_lstnew(void *data)
 {
 	t_list	*new;
 
-	if (!(new = malloc(sizeof(t_list))))
+	new = malloc(sizeof(t_list));
+	if (!new)
 		return (NULL);
 	new->data = data;
 	new->next = NULL;
@@ -60,7 +61,7 @@ t_list	*ft_lstlast(t_list *lst)
 
 void	ft_lstadd_back(t_list **alst, t_list *new)
 {
-	t_list *temp;
+	t_list	*temp;
 
 	temp = *alst;
 	if (temp)
@@ -70,16 +71,4 @@ void	ft_lstadd_back(t_list **alst, t_list *new)
 	}
 	else
 		*alst = new;
-}
-
-void	ft_lstprint(t_list *lst)
-{
-	t_list *tmp;
-
-	tmp = lst;
-	while (tmp)
-	{
-		printf("%s\n", tmp->data);
-		tmp = tmp->next;
-	}
 }

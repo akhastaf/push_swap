@@ -1,27 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_numbers.c                                      :+:      :+:    :+:   */
+/*   first.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/23 14:51:27 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/06/14 16:58:34 by akhastaf         ###   ########.fr       */
+/*   Created: 2021/06/14 16:04:27 by akhastaf          #+#    #+#             */
+/*   Updated: 2021/06/14 18:13:10 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/utils.h"
+#include "../includes/push_swap.h"
 
-void	get_numbers(t_stack **a, int ac, char **av)
+void	first(t_stack **a, t_stack **b, int *chunk)
 {
-	while (ac > 0)
+	t_stack	*tmp;
+	int		chunks;
+	int		i;
+	int		l;
+	t_range	r;
+
+	l = stack_count(*a);
+	if (l == 100)
+		chunks = 5;
+	else if (l == 500)
+		chunks = 11;
+	tmp = *a;
+	i = 0;
+	while (i < l)
 	{
-		if (check_error(ac, av))
-		{
-			clear_stack(a, free);
-			ft_puterror();
-		}
-		push(a, ft_atoi(av[ac]), 0);
-		ac--;
+		r.s = i;
+		r.e = i + (l / chunks);
+		from_a_to_b(a, b, r, chunk);
+		i += (l / chunks);
+		(*chunk)++;
 	}
 }

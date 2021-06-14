@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/21 16:15:21 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/04/21 17:17:31 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/14 17:01:30 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ char	*ft_strjoin(char *s1, char *s2)
 		return (ft_strdup(s2));
 	if (s1 && !s2)
 		return (ft_strdup(s1));
-	if (!(str = malloc(sizeof(char) * ((ft_strlen(s1) + ft_strlen(s2) + 1)))))
+	str = malloc(sizeof(char) * ((ft_strlen(s1) + ft_strlen(s2) + 1)));
+	if (!str)
 		return (NULL);
 	i = 0;
 	while (s1[i] != '\0')

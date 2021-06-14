@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_numbers.c                                      :+:      :+:    :+:   */
+/*   get_position.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/23 14:51:27 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/06/14 16:58:34 by akhastaf         ###   ########.fr       */
+/*   Created: 2021/06/14 16:02:26 by akhastaf          #+#    #+#             */
+/*   Updated: 2021/06/14 16:56:56 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/utils.h"
+#include "../includes/push_swap.h"
 
-void	get_numbers(t_stack **a, int ac, char **av)
+int	get_position(t_stack *a, int data)
 {
-	while (ac > 0)
+	t_stack	*tmp;
+	int		i;
+
+	tmp = a;
+	i = 0;
+	while (tmp)
 	{
-		if (check_error(ac, av))
-		{
-			clear_stack(a, free);
-			ft_puterror();
-		}
-		push(a, ft_atoi(av[ac]), 0);
-		ac--;
+		if (tmp->data < data)
+			i++;
+		tmp = tmp->next;
 	}
+	return (i);
 }

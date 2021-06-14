@@ -1,27 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_numbers.c                                      :+:      :+:    :+:   */
+/*   exec_opr.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/23 14:51:27 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/06/14 16:58:34 by akhastaf         ###   ########.fr       */
+/*   Created: 2021/06/14 15:55:09 by akhastaf          #+#    #+#             */
+/*   Updated: 2021/06/14 17:08:13 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/utils.h"
+#include "../includes/push_swap.h"
 
-void	get_numbers(t_stack **a, int ac, char **av)
+void	exec_opr(t_stack **a, t_stack **b, int chunk, char *opr)
 {
-	while (ac > 0)
-	{
-		if (check_error(ac, av))
-		{
-			clear_stack(a, free);
-			ft_puterror();
-		}
-		push(a, ft_atoi(av[ac]), 0);
-		ac--;
-	}
+	ft_putendl_fd(opr, 1);
+	do_opr(a, b, chunk, opr);
 }

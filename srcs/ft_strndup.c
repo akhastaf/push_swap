@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/21 16:16:21 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/04/21 17:17:00 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/14 17:00:31 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ char	*ft_strndup(const char *s1, size_t n)
 	char	*str;
 
 	i = 0;
-	if (!(str = (char*)malloc((n * sizeof(char)) + 1)))
+	str = (char *)malloc((n * sizeof(char)) + 1);
+	if (!str)
 		return (NULL);
 	while (s1[i] != '\0' && i < n)
 	{

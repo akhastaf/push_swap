@@ -6,14 +6,14 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 12:32:32 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/04/23 12:32:44 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/14 17:04:40 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/utils.h"
 
-void    ft_puterror(void)
+void	ft_puterror(void)
 {
-    ft_putendl_fd("Error", 2);
-    exit(1);
+	ft_putendl_fd("Error", 2);
+	exit(1);
 }

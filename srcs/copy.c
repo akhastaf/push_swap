@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_numbers.c                                      :+:      :+:    :+:   */
+/*   copy.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/23 14:51:27 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/06/14 16:58:34 by akhastaf         ###   ########.fr       */
+/*   Created: 2021/06/14 15:58:31 by akhastaf          #+#    #+#             */
+/*   Updated: 2021/06/14 17:13:58 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/utils.h"
 
-void	get_numbers(t_stack **a, int ac, char **av)
+t_stack	*copy(t_stack *a)
 {
-	while (ac > 0)
+	t_stack	*tmp;
+	t_stack	*new;
+
+	new = NULL;
+	tmp = a;
+	while (tmp)
 	{
-		if (check_error(ac, av))
-		{
-			clear_stack(a, free);
-			ft_puterror();
-		}
-		push(a, ft_atoi(av[ac]), 0);
-		ac--;
+		push(&new, tmp->data, tmp->chunk);
+		tmp = tmp->next;
 	}
+	return (new);
 }

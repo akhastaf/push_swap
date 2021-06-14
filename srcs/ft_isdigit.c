@@ -6,11 +6,11 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/21 17:12:17 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/04/21 17:12:19 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/06/14 17:05:33 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_isdigit(int c)
+int	ft_isdigit(int c)
 {
 	if (c >= 48 && c <= 57)
 		return (1);

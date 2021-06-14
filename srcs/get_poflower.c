@@ -1,27 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_numbers.c                                      :+:      :+:    :+:   */
+/*   get_poflower.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/23 14:51:27 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/06/14 16:58:34 by akhastaf         ###   ########.fr       */
+/*   Created: 2021/06/14 15:57:03 by akhastaf          #+#    #+#             */
+/*   Updated: 2021/06/14 16:57:39 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/utils.h"
+#include "../includes/push_swap.h"
 
-void	get_numbers(t_stack **a, int ac, char **av)
+int	get_poflower(t_stack *a, int chunk)
 {
-	while (ac > 0)
+	t_stack	*tmp;
+	int		min;
+	int		i;
+	int		p;
+
+	tmp = a;
+	min = tmp->data;
+	p = 0;
+	i = 0;
+	while (tmp)
 	{
-		if (check_error(ac, av))
+		if (tmp->data < min && tmp->chunk == chunk)
 		{
-			clear_stack(a, free);
-			ft_puterror();
+			min = tmp->data;
+			p = i;
 		}
-		push(a, ft_atoi(av[ac]), 0);
-		ac--;
+		tmp = tmp->next;
+		i++;
 	}
+	return (p);
 }

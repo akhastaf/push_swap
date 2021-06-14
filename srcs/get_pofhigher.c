@@ -1,27 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_numbers.c                                      :+:      :+:    :+:   */
+/*   get_pofhigher.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/23 14:51:27 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/06/14 16:58:34 by akhastaf         ###   ########.fr       */
+/*   Created: 2021/06/14 16:00:50 by akhastaf          #+#    #+#             */
+/*   Updated: 2021/06/14 16:58:13 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/utils.h"
+#include "../includes/push_swap.h"
 
-void	get_numbers(t_stack **a, int ac, char **av)
+int	get_pofhigher(t_stack *a, int chunk)
 {
-	while (ac > 0)
+	t_stack	*tmp;
+	int		max;
+	int		i;
+	int		p;
+
+	tmp = a;
+	max = tmp->data;
+	p = 0;
+	i = 0;
+	while (tmp)
 	{
-		if (check_error(ac, av))
+		if (tmp->data > max && tmp->chunk == chunk)
 		{
-			clear_stack(a, free);
-			ft_puterror();
+			max = tmp->data;
+			p = i;
 		}
-		push(a, ft_atoi(av[ac]), 0);
-		ac--;
+		tmp = tmp->next;
+		i++;
 	}
+	return (p);
 }

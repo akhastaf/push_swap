@@ -1,31 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   from_a_to_b.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/22 17:18:45 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/06/14 17:02:47 by akhastaf         ###   ########.fr       */
+/*   Created: 2021/06/14 16:03:38 by akhastaf          #+#    #+#             */
+/*   Updated: 2021/06/14 17:41:05 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/utils.h"
+#include "../includes/push_swap.h"
 
-int	ft_strcmp(const char *s1, const char *s2)
+void	from_a_to_b(t_stack **a, t_stack **b, t_range r, int *chunk)
 {
-	unsigned char	*cs1;
-	unsigned char	*cs2;
-	int				i;
+	int	l;
+	int	i;
 
-	cs1 = (unsigned char *)s1;
-	cs2 = (unsigned char *)s2;
+	l = stack_count(*a);
 	i = 0;
-	while (cs2[i] && cs1[i])
+	while (i < l)
 	{
-		if (cs1[i] != cs2[i])
-			return (cs1[i] - cs2[i]);
+		if (stack_count(*a) == 5)
+			sort_five(a, b, chunk);
+		if (r.s <= (*a)->data && (*a)->data <= r.e)
+			exec_opr(a, b, *chunk, "pb");
+		else
+			exec_opr(a, b, 0, "ra");
+		if (*a && r.s <= (*a)->data && (*a)->data <= r.e)
+		{
+			exec_opr(a, b, *chunk, "pb");
+			i++;
+		}
 		i++;
 	}
-	return (cs1[i] - cs2[i]);
 }
